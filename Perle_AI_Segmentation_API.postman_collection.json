@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "Perle AI Segmentation API",
+		"description": "Complete REST API collection for the Perle AI segmentation system take-home assignment. This collection demonstrates all core requirements: saving annotations, retrieving by ID/label/annotator, and area ranking calculations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health & Info",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["health"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": ["{{baseUrl}}"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "Create Project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Wildlife Detection Project\",\n  \"description\": \"Annotate animals in wildlife photos for conservation research\",\n  \"created_by\": \"64f123456789abcdef123456\",\n  \"annotators\": [\"64f456789abcdef123456789\", \"64fabcdef123456789abcdef\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Projects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/projects",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/{{projectId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects", "{{projectId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project Progress",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/{{projectId}}/progress",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects", "{{projectId}}", "progress"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project Images",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/projects/{{projectId}}/images",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "projects", "{{projectId}}", "images"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Images",
+			"item": [
+				{
+					"name": "Add Image to Project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"project_id\": \"{{projectId}}\",\n  \"filename\": \"forest_scene_001.jpg\",\n  \"url\": \"https://example.com/images/forest_scene_001.jpg\",\n  \"width\": 1920,\n  \"height\": 1080,\n  \"format\": \"jpg\",\n  \"file_size\": 2456789\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/images",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "images"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Image by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/images/{{imageId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "images", "{{imageId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Image Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/images/{{imageId}}/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "images", "{{imageId}}", "stats"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Area Rankings for Image (CORE REQUIREMENT)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/images/{{imageId}}/annotations/rankings",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "images", "{{imageId}}", "annotations", "rankings"]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Annotations (CORE REQUIREMENTS)",
+			"item": [
+				{
+					"name": "1. Save Annotation (Polygon Format)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"image_id\": \"{{imageId}}\",\n  \"project_id\": \"{{projectId}}\",\n  \"annotator_id\": \"64f123456789abcdef123456\",\n  \"label\": \"tree\",\n  \"mask\": {\n    \"format\": \"polygon\",\n    \"data\": {\n      \"exterior\": [[100, 100], [400, 100], [400, 500], [100, 500]],\n      \"holes\": []\n    },\n    \"width\": 1920,\n    \"height\": 1080\n  },\n  \"confidence\": 0.95,\n  \"status\": \"completed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. Save Annotation (RLE Format - SAM Compatible)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"image_id\": \"{{imageId}}\",\n  \"project_id\": \"{{projectId}}\",\n  \"annotator_id\": \"64f123456789abcdef123456\",\n  \"label\": \"elephant\",\n  \"mask\": {\n    \"format\": \"rle\",\n    \"data\": {\n      \"size\": [1080, 1920],\n      \"counts\": \"100,500,100,500,100,500,100\"\n    },\n    \"width\": 1920,\n    \"height\": 1080\n  },\n  \"confidence\": 0.92,\n  \"status\": \"completed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1. Save Annotation (Bitmap Format)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"image_id\": \"{{imageId}}\",\n  \"project_id\": \"{{projectId}}\",\n  \"annotator_id\": \"64f123456789abcdef123456\",\n  \"label\": \"insect\",\n  \"mask\": {\n    \"format\": \"bitmap\",\n    \"data\": {\n      \"mask\": [[1, 1, 1], [1, 0, 1], [1, 1, 1]]\n    },\n    \"width\": 3,\n    \"height\": 3\n  },\n  \"confidence\": 0.65,\n  \"status\": \"completed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Annotations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Retrieve Annotation by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations/{{annotationId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations", "{{annotationId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Retrieve Annotations by Label",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations/by-label/tree",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations", "by-label", "tree"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. Retrieve Annotations by Annotator",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations/by-annotator/{{annotatorId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations", "by-annotator", "{{annotatorId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. Get Annotation with Area Rank",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations/{{annotationId}}/rank",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations", "{{annotationId}}", "rank"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Annotations (Multiple Criteria)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/annotations/search?label=tree&status=completed&project_id={{projectId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "annotations", "search"],
+							"query": [
+								{
+									"key": "label",
+									"value": "tree"
+								},
+								{
+									"key": "status",
+									"value": "completed"
+								},
+								{
+									"key": "project_id",
+									"value": "{{projectId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "projectId",
+			"value": "68daae6d222e3e1da420910c",
+			"type": "string"
+		},
+		{
+			"key": "imageId",
+			"value": "68daae6d222e3e1da420910e",
+			"type": "string"
+		},
+		{
+			"key": "annotationId",
+			"value": "68daae6d222e3e1da4209111",
+			"type": "string"
+		},
+		{
+			"key": "annotatorId",
+			"value": "68daae6d222e3e1da4209109",
+			"type": "string"
+		}
+	]
+}
