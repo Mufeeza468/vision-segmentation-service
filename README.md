@@ -1,4 +1,4 @@
-# Perle AI Segmentation System - Take-Home Assignment
+# Vision Segmentation Service - Take-Home Assignment
 
 > **Complete REST API implementation for managing segmentation masks in AI annotation tools**
 > 
@@ -42,7 +42,7 @@ This system implements the backend APIs for a hypothetical web interface that ma
 ### 1. Clone and Setup
 ```bash
 git clone <repository-url>
-cd perle-ai-segmentation
+cd vision-segmentation-service
 npm install
 ```
 
@@ -75,7 +75,7 @@ npm run seed  # Creates sample projects, images, and annotations
 ```
 
 ### 5. API Testing
-- **Postman Collection**: Import `Perle_AI_Segmentation_API.postman_collection.json`
+- **Postman Collection**: Import `Vision_Segmentation_Service_API.postman_collection.json`
 - **Health Check**: `curl http://localhost:3000/health`
 - **Core Feature**: `curl http://localhost:3000/api/images/{imageId}/annotations/rankings`
 

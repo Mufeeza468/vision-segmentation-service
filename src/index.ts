@@ -39,7 +39,7 @@ app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
     timestamp: new Date().toISOString(),
-    service: 'Perle AI Segmentation API',
+    service: 'Vision Segmentation Service API',
     version: '1.0.0'
   });
 });
@@ -47,7 +47,7 @@ app.get('/health', (req, res) => {
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
-    message: 'Perle AI Segmentation System API',
+    message: 'Vision Segmentation Service API',
     version: '1.0.0',
     endpoints: {
       annotations: '/api/annotations',
@@ -85,7 +85,7 @@ async function startServer(): Promise<void> {
     
     // Start Express server
     app.listen(PORT, () => {
-      console.log(`🚀 Perle AI Segmentation API running on port ${PORT}`);
+      console.log(`🚀 Vision Segmentation Service API running on port ${PORT}`);
       console.log(`📚 API Documentation available at http://localhost:${PORT}/`);
       console.log(`💚 Health check available at http://localhost:${PORT}/health`);
       console.log(`🗂️  Data model documented in MODEL.md`);

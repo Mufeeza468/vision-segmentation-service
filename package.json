@@ -1,5 +1,5 @@
 {
-  "name": "perle-ai-segmentation",
+  "name": "vision-segmentation-service",
   "version": "1.0.0",
   "description": "REST API for segmentation mask annotation system",
   "main": "dist/index.js",

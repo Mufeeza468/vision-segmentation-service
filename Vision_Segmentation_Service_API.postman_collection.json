@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "12345678-1234-1234-1234-123456789abc",
-		"name": "Perle AI Segmentation API",
+		"name": "Vision Segmentation Service API",
 		"description": "Complete REST API collection for the Perle AI segmentation system take-home assignment. This collection demonstrates all core requirements: saving annotations, retrieving by ID/label/annotator, and area ranking calculations.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
